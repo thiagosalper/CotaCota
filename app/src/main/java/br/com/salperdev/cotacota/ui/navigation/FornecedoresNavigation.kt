@@ -1,7 +1,9 @@
 package br.com.salperdev.cotacota.ui.navigation
 
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import br.com.salperdev.cotacota.ui.navigation.FornecedoresDestinationsArgs.FORNECEDOR_ID_ARG
+import br.com.salperdev.cotacota.ui.navigation.FornecedoresDestinationsArgs.TITLE_ARG
 import br.com.salperdev.cotacota.ui.navigation.FornecedoresDestinationsArgs.USER_MESSAGE_ARG
 import br.com.salperdev.cotacota.ui.navigation.FornecedoresScreens.ADD_EDIT_FORNECEDOR_SCREEN
 import br.com.salperdev.cotacota.ui.navigation.FornecedoresScreens.FORNECEDORES_SCREEN
@@ -27,7 +29,22 @@ class FornecedoresNavigationActions(private val navController: NavHostController
         val navigatesFromDrawer = userMessage == 0
         navController.navigate(
             FORNECEDORES_SCREEN.let {
-                if (userMessage != 0) ""
+                if (userMessage != 0) "$it?$USER_MESSAGE_ARG=$userMessage" else it
+            }
+        ) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                inclusive = !navigatesFromDrawer
+                saveState = navigatesFromDrawer
+            }
+            launchSingleTop = true
+            restoreState = navigatesFromDrawer
+        }
+    }
+
+    fun navigateToAddEditFornecedor(title: Int, fornecedorId: String?) {
+        navController.navigate(
+            "$ADD_EDIT_FORNECEDOR_SCREEN/$title".let {
+                if (fornecedorId != null) "$it?$FORNECEDOR_ID_ARG=$fornecedorId" else it
             }
         )
     }
