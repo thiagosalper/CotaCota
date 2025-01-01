@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.salperdev.cotacota.data.repository.Fornecedor
 
 @Composable
 fun FornecedoresListScreen(
@@ -70,8 +71,89 @@ fun FornecedoresListScreen(
 
                 if(uiState.fornecedores.isEmpty()) {
                     NoFornecedoresInfo()
+                } else {
+                    FornecedoresList(
+                        editFornecedor = editFornecedor,
+                        deleteFornecedor = viewModel::deleteFornecedor,
+                        fornecedores = uiState.fornecedores
+                    )
+                }
+            }
+
+            if (uiState.isLoading) {
+                Box(Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(Modifier.align(Center))
                 }
             }
         }
+    }
+
+    @Composable
+    fun NoFornecedoresInfo() {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+            Text(stringResource(R.string.no_fornecedores_label), color = Color.Gray)
+        }
+    }
+
+    @Composable
+    fun FornecedoresList(
+        editFornecedor: (String) -> Unit,
+        deleteFornecedor: (String) -> Unit,
+        fornecedores: List<Fornecedor>
+    ) {
+        LazyColumn {
+            items(fornecedores) {
+                FornecedorItem(
+                    fornecedor = it,
+                    onEditFornecedor = editFornecedor,
+                    onDeleteFornecedor = deleteFornecedor
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun FornecedorItem(
+        fornecedor: Fornecedor,
+        onEditFornecedor: (String) -> Unit,
+        onDeleteFornecedor: (String) -> Unit
+    ) {
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+            .clickable { fornecedor.fornecedorId?.let {onEditFornecedor(it)} }
+            .shadow(5.dp, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color(0xFFBB86FC))
+            .padding(10.dp)
+        ) {
+            Column( modifier = Modifier.weight(1f) ) {
+               Text(
+                   text = fornecedor.name,
+                   style = MaterialTheme.typography.h4,
+               )
+
+                Text("${fornecedor.phone} phone")
+            }
+
+            IconButton(
+                modifier = Modifier
+                    .align(CenterVertically)
+                    .width(32.dp)
+                    .height(32.dp),
+                onClick = {fornecedor.fornecedorId?.let { onDeleteFornecedor(it) }}
+            ) {
+                Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete")
+            }
+        }
+    }
+
+    @Preview
+    @Composable
+    fun FornecedorPreview() {
+        FornecedorItem(
+            Fornecedor("", "Fornecedor Nome", "19 9 9999 9999"),
+            {}
+        ) { }
     }
 }
