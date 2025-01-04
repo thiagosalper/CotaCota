@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -69,7 +70,7 @@ fun FornecedoresListScreen(
                 Button(onClick = viewModel::addSampleFornecedores) {
                     Text("Add sample fornecedores")
                 }
-
+            }
                 if(uiState.fornecedores.isEmpty()) {
                     NoFornecedoresInfo()
                 } else {
@@ -79,7 +80,6 @@ fun FornecedoresListScreen(
                         fornecedores = uiState.fornecedores
                     )
                 }
-            }
 
             if (uiState.isLoading) {
                 Box(Modifier.fillMaxSize()) {
