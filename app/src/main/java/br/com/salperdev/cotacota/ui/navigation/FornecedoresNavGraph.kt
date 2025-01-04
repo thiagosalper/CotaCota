@@ -19,6 +19,10 @@ import br.com.salperdev.cotacota.ui.navigation.FornecedoresDestinationsArgs.TITL
 import kotlinx.coroutines.CoroutineScope
 import androidx.navigation.NavType
 import androidx.compose.runtime.remember
+import br.com.salperdev.cotacota.R
+import br.com.salperdev.cotacota.ui.addEditFornecedor.AddEditFornecedorScreen
+import br.com.salperdev.cotacota.ui.fornecedoresList.FornecedoresListScreen
+import br.com.salperdev.cotacota.ui.navigation.FornecedoresDestinationsArgs.USER_MESSAGE_ARG
 
 @Composable
 fun FornecedoresNavGraph(
@@ -45,9 +49,9 @@ fun FornecedoresNavGraph(
                 navArgument(USER_MESSAGE_ARG) { type = NavType.IntType; defaultValue = 0 }
             )
         ) {
-            FornecedorListScreen(
-                addFornecedor = { navActions.navigateToAddEditFornecedor(R.string.add_fornecedor, null) },
-                editFornecedor = { fornecedorId -> navActions.navigateToAddEditFornecedor(R.string.edit_fornecedor, fornecedorId) }
+            FornecedoresListScreen(
+                addFornecedor = { navAction.navigateToAddEditFornecedor(R.string.add_fornecedor, null) },
+                editFornecedor = { fornecedorId -> navAction.navigateToAddEditFornecedor(R.string.edit_fornecedor, fornecedorId) }
             )
         }
         composable(

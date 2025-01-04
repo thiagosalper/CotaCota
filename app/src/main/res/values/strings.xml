@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CotaCota</string>
+    <string name="add_fornecedor">Add Fornecedor</string>
+    <string name="edit_fornecedor">Edit Fornecedor</string>
+    <string name="no_fornecedor_label">Nenhum fornecedor</string>
+    <string name="name_hint">Titulo</string>
+    <string name="save_fornecedor_description">Salvar</string>
+    <string name="fornecedor_name_label">Nome do fornecedor</string>
+    <string name="fornecedor_phone_label">Telefone</string>
+    <string name="error_loading_fornecedor">Erro ao carregar</string>
+    <string name="error_saving_fornecedor">Erro ao salvar</string>
+
 </resources>

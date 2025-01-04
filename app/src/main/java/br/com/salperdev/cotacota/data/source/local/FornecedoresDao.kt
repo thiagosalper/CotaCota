@@ -15,7 +15,7 @@ interface FornecedoresDao {
     fun observeFornecedores(): Flow<List<FornecedorEntity>>
 
     @Query("SELECT * FROM fornecedores WHERE fornecedorId = :fornecedorId")
-    fun observeFornecedorById(forncedorId: String): Flow<FornecedorEntity?>
+    fun observeFornecedorById(fornecedorId: String): Flow<FornecedorEntity?>
 
     @Query("SELECT * FROM fornecedores")
     suspend fun getFornecedores(): List<FornecedorEntity>
